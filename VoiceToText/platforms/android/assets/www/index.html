@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Speech Recognition plugin demo</title>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        function onDeviceReady() {
+            console.log("Device is ready");
+        }
+
+        function sendToServer(val) {
+            alert(val);
+            
+                var res = {};
+                res.value = val;
+                $.ajax({
+                    url:"http://192.168.0.103:3000/",
+                    type:'POST',
+                    data:res,
+                    timeout:10000,
+                    success:function(s){
+                        alert("Succes " + s);
+                    },
+                    error:function(e){
+                        alert("error " + JSON.stringify(e));
+                    }
+                });
+            //params = {address:"FB:07:88:6A:62:EC"};
+            //bluetoothle.connect(connectSuccess, connectError, params);
+            //ble.connect("FB:07:88:6A:62:EC", connectSuccess, connectFailure);
+        }
+
+        function connectSuccess(c) {
+        alert(c);
+        }
+        function connectError(e){
+        alert(e);
+        }
+
+        function recognizeSpeech() {
+            var maxMatches = 5;
+            var promptString = "Speak now"; // optional
+            var language = "en-US"; // optional
+            window.plugins.speechrecognizer.startRecognize(function (result) {
+                sendToServer(result[0]);
+            }, function (errorMessage) {
+                console.log("Error message: " + errorMessage);
+                alert(errorMessage);
+            }, maxMatches, promptString, language);
+        }
+
+         // Show the list of the supported languages
+        function getSupportedLanguages() {
+            window.plugins.speechrecognizer.getSupportedLanguages(function (languages) {
+                // display the json array
+                alert(languages);
+            }, function (error) {
+                alert("Could not retrieve the supported languages : " + error);
+            });
+        }
+
+        document.addEventListener("deviceready", onDeviceReady, true);
+        document.addEventListener("click", recognizeSpeech, true);
+    </script>
+
+    <div style="left:20%;top:40%;position:absolute;font-family:helvetica;color:#3A3B72;">Click anywhere to start listening</div>
+    <!--<button onclick="getSupportedLanguages();">Get Supported Languages</button>-->
+</body>
+
+</html>

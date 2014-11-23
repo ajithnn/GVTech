@@ -1,0 +1,32 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "res/xml/config.xml": {
+                "parents": {
+                    "/widget": [],
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"SpeechRecognizer\"><param name=\"android-package\" value=\"com.phonegap.plugins.speech.SpeechRecognizer\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "AndroidManifest.xml": {
+                "parents": {
+                    "/manifest": []
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "com.phonegap.plugins.speech": {
+            "PACKAGE_NAME": "com.intel.iot.stt"
+        }
+    },
+    "dependent_plugins": {}
+}
